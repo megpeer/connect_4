@@ -39,6 +39,12 @@ class Game
     p "  5| #{board[0][5]} #{board[1][5]} #{board[2][5]} #{board[3][5]} #{board[4][5]} #{board[5][5]} #{board[6][5]}  |"
     p "      1  2  3  4  5  6  7 "
   end
+  def next_round
+
+    @turn_count += 1
+        puts "round #{@turn_count}"
+  end
+
 
   def player_move
     puts "please enter a number 1-7 to place piece in a column. or enter q to quit"
@@ -87,120 +93,103 @@ class Game
       @board[col][row] = @player
   end
 
-  def next_round
-
-    @turn_count += 1
-        puts "round #{@turn_count}"
-  end
 
   def vertical_win?
-    col = @last_col
-    row = 0
     player_count = 0
-    row += 1 until @board[col][row] != BLANK
-      counter = (6 - row)
-    
-      counter.times do 
-        if @board[col][row] == @player
-          player_count += 1 
-          row += 1
-        else
-          break
-        end
-    player_count
+    analysis_array = @board[@last_col]
+
+    analysis_array.each do |item|
+      if player_count == 4
+        break
+      elsif item == @player
+        player_count += 1
+      else
+        player_count = 0
+      end
     end
+    player_count
   end
 
   def horizontal_win?
     player_count = 0
     analysis_array = []
     row = @last_row
-    col = 0
-    idx = 7
-    
+    col = 0    
     7.times do 
       analysis_array << @board[col][row]
       col += 1
     end
-    until analysis_array[idx] == @player
-      idx = (idx - 1)
+
+    analysis_array.each do |item|
+      if player_count == 4
+        break
+      elsif item == @player
+        player_count += 1
+      else
+        player_count = 0
+      end
     end
-    puts idx
-    puts analysis_array
-    counter = (7 - idx)
-    # puts counter
-        idx.times do 
-          if analysis_array[idx] == @player
-            player_count += 1 
-            puts "yay! another"
-            idx -= 1
-          else
-            break
-          end
-          puts player_count
       player_count
-    end
   end
 
-  # def diagonal_fwd_win?
-  # # /
-  # player_count = 0
-  # analysis_array = []
-  # row = @last_row
-  # col = @last_col
-  # idx = 3
-  # counter = (1 + col)
+  def diagonal_fwd_win?
+  # /
+  player_count = 0
+  analysis_array = []
+  row = @last_row
+  col = @last_col
+  counter = (1 + col)
 
-  #     counter.times do 
-  #       analysis_array << @board[col][row]
-  #       col -= 1
-  #       row += 1
-  #     end
-  #     4.times do 
-  #     if analysis_array[idx] == @player
-  #       player_count += 1 
-  #       idx -= 1
-  #     else
-  #       break
-  #     end
-  #     player_count
-  #   end
-  # end
+      counter.times do 
+        analysis_array << @board[col][row]
+        col -= 1
+        row += 1
+      end
 
-  # def diagonal_bk_win?
-  # # \
-  #   player_count = 0
-  #   analysis_array = []
-  #   row = @last_row
-  #   col = @last_col
-  #   idx = 3
-  #   counter = (7 - col)
+    analysis_array.each do |item|
+      if player_count == 4
+        break
+      elsif item == @player
+        player_count += 1
+      else
+        player_count = 0
+      end
+    end
+      player_count
+  end
+
+  def diagonal_bk_win?
+  # \
+    player_count = 0
+    analysis_array = []
+    row = @last_row
+    col = @last_col
+    counter = (7 - col)
   
-  #     counter.times do 
-  #       analysis_array << @board[col][row]
-  #       col += 1
-  #       row += 1
-  #     end
+      counter.times do 
+        analysis_array << @board[col][row]
+        col += 1
+        row += 1
+      end
 
-  #     puts analysis_array
-
-  #     4.times do 
-  #     if analysis_array[idx] == @player
-  #       player_count += 1 
-  #       idx -= 1
-  #     else
-  #       break
-  #     end
-  #     player_count
-  #   end
-  # end
+    analysis_array.each do |item|
+      if player_count == 4
+        break
+      elsif item == @player
+        player_count += 1
+      else
+        player_count = 0
+      end
+    end
+      player_count
+  end
 
   def game_over?
-    if @turn_count <= 4 
+    if @turn_count <= 6 
       return false
     else
-    return true if vertical_win? == 4 || horizontal_win? == 4
-    # return true if (vertical_win? == 4) || (horizontal_win? == 4) || (diagonal_fwd_win? == 4) || (diagonal_bk_win? == 4) || @turn_count == 42 
+
+    return true if (vertical_win? == 4) || (horizontal_win? == 4) || (diagonal_fwd_win? == 4) || (diagonal_bk_win? == 4) || @turn_count == 42 
       false
     end
   end
