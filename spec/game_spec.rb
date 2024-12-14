@@ -5,28 +5,10 @@ describe Game do
   before do
     allow($stdout).to receive(:write) 
   end
-  # describe "#valid_move" do
-  # subject(:game_input) { described_class.new }
-
-
-  #   context "when user enters valid move" do
-  #     it "returns a valid number" do
-  #       subject.instance_variable_set(:@move, 1)
-  #       expect(game_input.valid_move).to be(true)
-  #     end
-  #   end
-
-
-  #   context "when user enters invalid gibberish" do
-  #     it "sends back to player_move" do
-  #       subject.instance_variable_set(:@move, "a")
-  #       expect(game_input.valid_move).to be("invalid input, please try again")
-  #     end
-  #   end
-  # end
 
   describe "#place_move" do
   let(:game_place_move) { described_class.new }
+
     context "when player selects valid empty column" do
       before do
         valid_move = '1'
@@ -51,4 +33,83 @@ describe Game do
     # end
 
   end
+
+  # describe "#valid_move" do
+  #   context "" do
+  #     it "" do
+        
+  #     end
+  #   end
+  # end
+
+  # describe "#column_full?" do
+  #   context "" do
+  #     it "" do
+        
+  #     end
+  #   end
+  # end
+
+  # describe "#place_move" do
+  #   context "" do
+  #     it "" do
+        
+  #     end
+  #   end
+  # end
+
+  # describe "#vertical_win?" do
+  #   context "" do
+  #     it "" do
+        
+  #     end
+  #   end
+  # end
+
+  # describe "#horizontal_win?" do
+  #   context "" do
+  #     it "" do
+        
+  #     end
+  #   end
+  # end
+
+  # describe "#diagonal_fwd_win?" do
+  #   context "" do
+  #     it "" do
+        
+  #     end
+  #   end
+  # end
+
+  # describe "#diagonal_bk_win?" do
+  #   context "" do
+  #     it "" do
+        
+  #     end
+  #   end
+  # end
+
+  describe "#game_over?" do
+  subject(:gmov) {described_class.new}
+    
+    context "when game over conditions are not met" do
+      it "is not game over" do
+        game_over = gmov.game_over?
+        expect(game_over).to eq(false)
+      end
+    end
+    context "when game over conditions are met" do
+      allow(gmov.vertical_win?).to_receive(:value).and_return(4)
+      # let(:vertical_win?) { 4 }
+      
+      it "is game over" do
+        
+        game_over = gmov.game_over?
+        expect(game_over).to eq(true)
+    end
+  end
+  end
+
+
 end

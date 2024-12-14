@@ -80,17 +80,17 @@ class Game
 
 
   def place_move
-      col = (@move - 1)
-      row = 5
-      row -= 1 until @board[col][row] == BLANK
-      @last_col = col
-      @last_row = row      
-      @player = if @turn_count.even?
-        P1
-      else
-        P2
-      end
-      @board[col][row] = @player
+    col = (@move - 1)
+    row = 5
+    row -= 1 until @board[col][row] == BLANK
+    @last_col = col
+    @last_row = row      
+    @player = if @turn_count.even?
+      P1
+    else
+      P2
+    end
+    @board[col][row] = @player
   end
 
 
@@ -134,11 +134,11 @@ class Game
 
   def diagonal_fwd_win?
   # /
-  player_count = 0
-  analysis_array = []
-  row = @last_row
-  col = @last_col
-  counter = (1 + col)
+    player_count = 0
+    analysis_array = []
+    row = @last_row
+    col = @last_col
+    counter = (1 + col)
 
       counter.times do 
         analysis_array << @board[col][row]
@@ -188,7 +188,6 @@ class Game
     if @turn_count <= 6 
       return false
     else
-
     return true if (vertical_win? == 4) || (horizontal_win? == 4) || (diagonal_fwd_win? == 4) || (diagonal_bk_win? == 4) || @turn_count == 42 
       false
     end
